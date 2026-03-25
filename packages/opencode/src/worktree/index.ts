@@ -14,7 +14,7 @@ import { GlobalBus } from "@/bus/global"
 import { Effect, FileSystem, Layer, Path, Scope, ServiceMap, Stream } from "effect"
 import { ChildProcess, ChildProcessSpawner } from "effect/unstable/process"
 import { NodeFileSystem, NodePath } from "@effect/platform-node"
-import { makeRunPromise } from "@/effect/run-service"
+import { makeRuntime } from "@/effect/run-service"
 import * as CrossSpawnSpawner from "@/effect/cross-spawn-spawner"
 
 export namespace Worktree {
@@ -607,7 +607,7 @@ export namespace Worktree {
     Layer.provide(NodeFileSystem.layer),
     Layer.provide(NodePath.layer),
   )
-  const runPromise = makeRunPromise(Service, defaultLayer)
+  const { runPromise } = makeRuntime(Service, defaultLayer)
 
   export async function makeWorktreeInfo(name?: string) {
     return runPromise((svc) => svc.makeWorktreeInfo(name))

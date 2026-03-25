@@ -40,10 +40,10 @@ function boot(input: { directory: string; init?: () => Promise<any>; project?: P
             worktree: input.worktree,
             project: input.project,
           }
-        : await Project.fromDirectory(input.directory).then(({ project, sandbox }) => ({
+        : await Project.fromDirectory(input.directory).then((result) => ({
             directory: input.directory,
-            worktree: sandbox,
-            project,
+            worktree: result.sandbox,
+            project: result.project,
           }))
     await context.provide(ctx, async () => {
       await input.init?.()
